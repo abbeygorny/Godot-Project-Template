@@ -1,0 +1,142 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://HUD.gd" type="Script" id=1]
+[ext_resource path="res://Player/Player_Container.gd" type="Script" id=2]
+[ext_resource path="res://Menu.gd" type="Script" id=3]
+[ext_resource path="res://Global.gd" type="Script" id=4]
+[ext_resource path="res://Enemy/Enemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Asteroid/Asteroid.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/potw1924a.jpg" type="Texture" id=7]
+[ext_resource path="res://UI/Kickback.ttf" type="DynamicFontData" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 8 )
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 4 )
+__meta__ = {
+"_editor_description_": "The root of the scene"
+}
+
+[node name="Player_Container" type="Node2D" parent="."]
+script = ExtResource( 2 )
+
+[node name="Asteroid_Container" type="Node2D" parent="."]
+
+[node name="Asteroid" parent="Asteroid_Container" instance=ExtResource( 6 )]
+position = Vector2( 100, 100 )
+
+[node name="Asteroid2" parent="Asteroid_Container" instance=ExtResource( 6 )]
+position = Vector2( 800, 500 )
+
+[node name="Effects" type="Node2D" parent="."]
+
+[node name="Enemy_Container" type="Node2D" parent="."]
+
+[node name="Enemy" parent="Enemy_Container" instance=ExtResource( 5 )]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="UI"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="UI/HUD"]
+margin_left = -5.0
+margin_right = 1032.0
+margin_bottom = 596.0
+texture = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="UI/HUD"]
+visible = false
+modulate = Color( 0.67451, 0.388235, 0.815686, 1 )
+self_modulate = Color( 0.654902, 0.396078, 0.831373, 1 )
+margin_right = 1029.0
+margin_bottom = 782.0
+color = Color( 0.658824, 0.494118, 0.921569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score" type="Label" parent="UI/HUD"]
+margin_right = 1024.0
+margin_bottom = 30.0
+rect_scale = Vector2( 1, 0.930493 )
+custom_fonts/font = SubResource( 1 )
+text = "Score:"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Time" type="Label" parent="UI/HUD"]
+margin_left = -35.0
+margin_right = 989.0
+margin_bottom = 30.0
+custom_fonts/font = SubResource( 2 )
+text = "Time:"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lives" type="Label" parent="UI/HUD"]
+margin_left = 5.0
+margin_top = 570.0
+margin_right = 1029.0
+margin_bottom = 600.0
+custom_fonts/font = SubResource( 3 )
+text = "Lives:"
+valign = 1
+
+[node name="Timer" type="Timer" parent="UI/HUD"]
+autostart = true
+
+[node name="Menu" type="Control" parent="UI"]
+pause_mode = 2
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Game_Paused" type="Label" parent="UI/Menu"]
+margin_right = 40.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Restart" type="Button" parent="UI/Menu"]
+margin_left = 462.0
+margin_top = 350.0
+margin_right = 562.0
+margin_bottom = 390.0
+text = "Restart Game"
+
+[node name="Quit" type="Button" parent="UI/Menu"]
+margin_left = 462.0
+margin_top = 499.0
+margin_right = 562.0
+margin_bottom = 539.0
+rect_scale = Vector2( 1, 0.989059 )
+text = "Quit"
+
+[connection signal="timeout" from="UI/HUD/Timer" to="." method="_on_Timer_timeout"]
+[connection signal="pressed" from="UI/Menu/Restart" to="UI/Menu" method="_on_Restart_pressed"]
+[connection signal="pressed" from="UI/Menu/Quit" to="UI/Menu" method="_on_Quit_pressed"]
