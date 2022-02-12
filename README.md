@@ -18,7 +18,7 @@ The explosion spritesheet was released into the public domain by [StumpyStrust](
 None
 
 ## Future Development
-Advanced features?
+None
 
 ## Created by
 Abbey Gorny
